@@ -32,14 +32,16 @@ labels = csv['m_label']
 csv.drop("m_label", axis=1, inplace=True) if "m_label" in csv else ...
 
 features = csv.as_matrix()
+features = (features - 255) * -1
 
 index = 0
 for row in features:
+    print("Creating image %s" % labels[index])
     dow_data = np.array(row)
     dow_data = dow_data.reshape((20, 20))
 
     # Prepare and save each image
-    plt.imshow(dow_data)
+    plt.imshow(dow_data, cmap='gray', interpolation='nearest')
     plt.axis('off')
     plt.savefig("./figures/%s" % labels[index], bbox_inches='tight')
     plt.clf() # clear plt for the next plot
